@@ -155,30 +155,88 @@
     <section id="showcase">
       <div class="wrap">
         <div style="text-align:center"><span class="section-label">🖼️ Showcase</span></div>
-        <h2 class="section-title">WebEyes Examples</h2>
-        <p class="section-desc">Representative examples showing how Pixel-Searcher resolves knowledge-intensive visual queries.</p>
-        <div class="showcase-grid">
-          <article class="card showcase-card">
-            <img src="assets/showcase_sample_0001.jpg" alt="Product grounding example" loading="lazy">
-            <div class="showcase-body">
-              <h3>Product Grounding</h3>
-              <p>Questions require brand and model knowledge before the visible target can be localized.</p>
+        <div class="task-switch" id="showcase-tabs" role="tablist" style="margin-bottom: 24px;">
+          <button class="switch-btn" type="button" role="tab" aria-selected="true" onclick="showExample(1)">Brand Ambassador</button>
+          <button class="switch-btn" type="button" role="tab" aria-selected="false" onclick="showExample(2)">Cultural Artifact</button>
+          <button class="switch-btn" type="button" role="tab" aria-selected="false" onclick="showExample(3)">Virtual IP</button>
+        </div>
+
+        <div id="example-1" class="showcase-example-card card" style="overflow: hidden; display: block;">
+          <div style="padding: 24px; border-bottom: 1px solid var(--line); background: var(--wash-alt);">
+            <div style="font-size: 13px; font-weight: 800; color: var(--purple); text-transform: uppercase; margin-bottom: 10px; letter-spacing: 0.05em;">Example 1: Brand Ambassador Identification</div>
+            <div style="font-size: 18px; font-weight: 600; color: var(--ink);">
+              <span style="color: var(--blue);">Question:</span> "Please find 'the person who became a brand ambassador for the South Korean brand NE:AR in 2025' in the image."
             </div>
-          </article>
-          <article class="card showcase-card">
-            <img src="assets/showcase_sample_0014.jpg" alt="Fine-grained distractor example" loading="lazy">
-            <div class="showcase-body">
-              <h3>Fine-Grained Distractors</h3>
-              <p>Multiple plausible objects appear in the same image, so search evidence must guide disambiguation.</p>
+            <div style="font-size: 14px; color: var(--muted); margin-top: 8px;">
+              Questions require external knowledge (identifying the ambassador for a specific brand in a given year) before the visible target (Sana) can be localized and segmented.
             </div>
-          </article>
-          <article class="card showcase-card">
-            <img src="assets/showcase_sample_0001_mask.png" alt="Pixel-level mask output" loading="lazy">
-            <div class="showcase-body">
-              <h3>Pixel-Level Output</h3>
-              <p>Segmentation results are scored with target masks rather than text-only correctness.</p>
+          </div>
+          <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1px; background: var(--line);">
+            <div style="background: #fff;">
+              <div style="padding: 12px 16px; font-size: 13px; font-weight: 700; color: var(--muted); text-align: center; border-bottom: 1px solid var(--line);">Original Image</div>
+              <div style="display: flex; align-items: center; justify-content: center; width: 100%; aspect-ratio: 4/3; background: #f1f5f9;">
+                <img src="assets/sample_20260305_191244_f4b9db.png" alt="Original Image" loading="lazy" style="max-width: 100%; max-height: 100%; box-shadow: 0 2px 8px rgba(0,0,0,0.05);">
+              </div>
             </div>
-          </article>
+            <div style="background: #fff;">
+              <div style="padding: 12px 16px; font-size: 13px; font-weight: 700; color: var(--muted); text-align: center; border-bottom: 1px solid var(--line);">Predicted Mask</div>
+              <div style="display: flex; align-items: center; justify-content: center; width: 100%; aspect-ratio: 4/3; background: #f1f5f9;">
+                <img src="assets/sample_20260305_191244_f4b9db__obj_001_mask.png" alt="Mask Image" loading="lazy" style="max-width: 100%; max-height: 100%; background: #000; box-shadow: 0 2px 8px rgba(0,0,0,0.15);">
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div id="example-2" class="showcase-example-card card" style="overflow: hidden; display: none;">
+          <div style="padding: 24px; border-bottom: 1px solid var(--line); background: var(--wash-alt);">
+            <div style="font-size: 13px; font-weight: 800; color: var(--teal); text-transform: uppercase; margin-bottom: 10px; letter-spacing: 0.05em;">Example 2: Cultural Artifact Grounding</div>
+            <div style="font-size: 18px; font-weight: 600; color: var(--ink);">
+              <span style="color: var(--blue);">Question:</span> "Please find 'the artifact that became a viral internet meme due to the performance of the actress who played Mu Nianci in a certain version of The Legend of the Condor Heroes while playing games on the variety show Keep Running Season 13' in the image."
+            </div>
+            <div style="font-size: 14px; color: var(--muted); margin-top: 8px;">
+              The system must use external knowledge to retrieve the viral internet meme related to the actress playing Mu Nianci, then identify the Sword of Goujian among other artifacts in the image.
+            </div>
+          </div>
+          <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1px; background: var(--line);">
+            <div style="background: #fff;">
+              <div style="padding: 12px 16px; font-size: 13px; font-weight: 700; color: var(--muted); text-align: center; border-bottom: 1px solid var(--line);">Original Image</div>
+              <div style="display: flex; align-items: center; justify-content: center; width: 100%; aspect-ratio: 4/3; background: #f1f5f9;">
+                <img src="assets/sample_20260305_202401_6c09f5.png" alt="Original Image" loading="lazy" style="max-width: 100%; max-height: 100%; box-shadow: 0 2px 8px rgba(0,0,0,0.05);">
+              </div>
+            </div>
+            <div style="background: #fff;">
+              <div style="padding: 12px 16px; font-size: 13px; font-weight: 700; color: var(--muted); text-align: center; border-bottom: 1px solid var(--line);">Predicted Mask</div>
+              <div style="display: flex; align-items: center; justify-content: center; width: 100%; aspect-ratio: 4/3; background: #f1f5f9;">
+                <img src="assets/sample_20260305_202401_6c09f5__obj_002_mask.png" alt="Mask Image" loading="lazy" style="max-width: 100%; max-height: 100%; background: #000; box-shadow: 0 2px 8px rgba(0,0,0,0.15);">
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div id="example-3" class="showcase-example-card card" style="overflow: hidden; display: none;">
+          <div style="padding: 24px; border-bottom: 1px solid var(--line); background: var(--wash-alt);">
+            <div style="font-size: 13px; font-weight: 800; color: var(--pink); text-transform: uppercase; margin-bottom: 10px; letter-spacing: 0.05em;">Example 3: Virtual IP Grounding</div>
+            <div style="font-size: 18px; font-weight: 600; color: var(--ink);">
+              <span style="color: var(--blue);">Question:</span> "Please find 'the rabbit that was paired with Clarence during the collaboration between Lovebrush Chronicles and this IP' in the image."
+            </div>
+            <div style="font-size: 14px; color: var(--muted); margin-top: 8px;">
+              The agent needs to perform multi-hop reasoning to discover the collaboration between the game and this IP, identifying the specific rabbit character to accurately segment it.
+            </div>
+          </div>
+          <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1px; background: var(--line);">
+            <div style="background: #fff;">
+              <div style="padding: 12px 16px; font-size: 13px; font-weight: 700; color: var(--muted); text-align: center; border-bottom: 1px solid var(--line);">Original Image</div>
+              <div style="display: flex; align-items: center; justify-content: center; width: 100%; aspect-ratio: 4/3; background: #f1f5f9;">
+                <img src="assets/sample_20260305_203441_a96969.png" alt="Original Image" loading="lazy" style="max-width: 100%; max-height: 100%; box-shadow: 0 2px 8px rgba(0,0,0,0.05);">
+              </div>
+            </div>
+            <div style="background: #fff;">
+              <div style="padding: 12px 16px; font-size: 13px; font-weight: 700; color: var(--muted); text-align: center; border-bottom: 1px solid var(--line);">Predicted Mask</div>
+              <div style="display: flex; align-items: center; justify-content: center; width: 100%; aspect-ratio: 4/3; background: #f1f5f9;">
+                <img src="assets/sample_20260305_203441_a96969__obj_005_mask.png" alt="Mask Image" loading="lazy" style="max-width: 100%; max-height: 100%; background: #000; box-shadow: 0 2px 8px rgba(0,0,0,0.15);">
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     </section>
@@ -205,5 +263,20 @@
   </footer>
 
   <script src="leaderboard.js"></script>
+  <script>
+    function showExample(index) {
+      // Hide all
+      for(let i=1; i<=3; i++) {
+        document.getElementById('example-'+i).style.display = 'none';
+      }
+      // Unselect all buttons
+      const buttons = document.querySelectorAll('#showcase-tabs .switch-btn');
+      buttons.forEach(b => b.setAttribute('aria-selected', 'false'));
+      
+      // Show selected
+      document.getElementById('example-'+index).style.display = 'block';
+      buttons[index-1].setAttribute('aria-selected', 'true');
+    }
+  </script>
 </body>
 </html>
